@@ -10,7 +10,7 @@ from .serializers import StockSerializer
 class StockList(APIView):
 
     def get(self, request):
-        stocks = Stocks.objects.all()
+        stocks = Stock.objects.all()
         serializer = StockSerializer(stocks, many=True)
         return Response(serializer.data)
 
