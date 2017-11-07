@@ -1,6 +1,5 @@
-from flask import Flask
+from flask import Flask, jsonify
 from employee import Employee
-from flask import jsonify
 
 app = Flask(__name__)
 @app.route("/")
@@ -18,7 +17,7 @@ def test():
 
 @app.route("/list")
 def list():
-    return [1,2,3,4,5,6,7,8,9,10]
+    return jsonify([1,2,3,4,5,6,7,8,9,10])
 
 #export FLASK_APP=hello.py python -m flask run
 
