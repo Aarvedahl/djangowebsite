@@ -1,5 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, json
 from employee import Employee
+import names
 
 app = Flask(__name__)
 @app.route("/")
@@ -14,6 +15,17 @@ def today():
 def test():
     employee = Employee('first name','last name')
     return employee.toJson()
+
+@app.route("/jsonlist")
+def jsonlist():
+    list = []
+    employee = Employee('Queenie','Santos')
+    list.append(employee)
+    employee = Employee("Alex", "Arvedahl")
+    list.append(employee)
+    return json.dumps([employee.__dict__ for employee in list])
+
+
 
 @app.route("/list")
 def list():
