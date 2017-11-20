@@ -1,8 +1,21 @@
 from flask import Flask, jsonify, json
 from employee import Employee
+from flask.ext.mysql import MySQL
 import names
 
 app = Flask(__name__)
+
+mysql = MySQL()
+
+# MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'jay'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'jay'
+app.config['MYSQL_DATABASE_DB'] = 'BucketList'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
+conn = mysql.connect()
+cursor = conn.cursor()
+
 @app.route("/")
 def hello():
     return "Hello World! here is flask"
@@ -41,5 +54,3 @@ def show_user_id(user_id):
 
 
 #export FLASK_APP=hello.py python -m flask run
-
-
