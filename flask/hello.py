@@ -1,25 +1,27 @@
 from flask import Flask, jsonify, json
 from employee import Employee
-from flask.ext.mysql import MySQL
 import names
 import MySQLdb as mdb
+from models import Ingredient
 
 
 app = Flask(__name__)
 
 # MySQL configurations
-con = mdb.connect(host="localhost",user="joebob",
-                  passwd="moonpie",db="thangs")
+con = mdb.connect(host="localhost",user="root",
+                  passwd="password",db="food")
 
 @app.route("/mysql")
 def mysql():
+    ingredientList = []
     cur = con.cursor()
-    cur.execute("SELECT * FROM Writers")
-
+    cur.execute("SELECT * FROM Ingredients")
     rows = cur.fetchall()
-
+#         print row["Id"], row["Name"]
     for row in rows:
-        print row
+        ingre = Ingredient(row[0], row[1])
+        ingredientList.append(ingre)
+    return ingredientList[0].toJson()
 
 @app.route("/")
 def hello():
