@@ -17,11 +17,11 @@ def mysql():
     cur = con.cursor()
     cur.execute("SELECT * FROM Ingredients")
     rows = cur.fetchall()
-#         print row["Id"], row["Name"]
+
     for row in rows:
         ingre = Ingredient(row[0], row[1])
         ingredientList.append(ingre)
-    return ingredientList[0].toJson()
+    return json.dumps([ing.__dict__ for ing in ingredientList])
 
 @app.route("/")
 def hello():
@@ -39,7 +39,7 @@ def test():
 @app.route("/jsonlist")
 def jsonlist():
     list = []
-    employee = Employee('Queenie','Santos')
+    employee = Employee('Alex','dkaldkal')
     list.append(employee)
     employee = Employee("Alex", "Arvedahl")
     list.append(employee)
