@@ -2,19 +2,24 @@ from flask import Flask, jsonify, json
 from employee import Employee
 from flask.ext.mysql import MySQL
 import names
+import MySQLdb as mdb
+
 
 app = Flask(__name__)
 
-mysql = MySQL()
-
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'jay'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'jay'
-app.config['MYSQL_DATABASE_DB'] = 'BucketList'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql.init_app(app)
-conn = mysql.connect()
-cursor = conn.cursor()
+con = mdb.connect(host="localhost",user="joebob",
+                  passwd="moonpie",db="thangs")
+
+@app.route("/mysql")
+def mysql():
+    cur = con.cursor()
+    cur.execute("SELECT * FROM Writers")
+
+    rows = cur.fetchall()
+
+    for row in rows:
+        print row
 
 @app.route("/")
 def hello():
