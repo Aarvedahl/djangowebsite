@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, json
+from flask import Flask, jsonify, json, request
 from employee import Employee
 import names
 import MySQLdb as mdb
@@ -23,13 +23,11 @@ def mysql():
         ingredientList.append(ingre)
     return json.dumps([ing.__dict__ for ing in ingredientList])
 
-@app.route("/")
-def hello():
-    return "Hello World! here is flask"
-
-@app.route("/today")
-def today():
-    return "It is tuesday today"
+@app.route("/postjson", methods=['GET', 'POST'])
+def postjson():
+    request_json = request.get_json()
+    print(request_json.get('firstName'))
+    return "ok"
 
 @app.route("/json")
 def test():
@@ -44,12 +42,6 @@ def jsonlist():
     employee = Employee("Alex", "Arvedahl")
     list.append(employee)
     return json.dumps([employee.__dict__ for employee in list])
-
-
-
-@app.route("/list")
-def list():
-    return jsonify([1,2,3,4,5,6,7,8,9,10])
 
 @app.route('/user/<username>')
 def show_user_profile(username):
